@@ -1,4 +1,7 @@
 from etl.sensor_data import TransformedSensorData
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def transform_all(sensor_data):
@@ -21,13 +24,25 @@ def transform_all(sensor_data):
     )
 
 
+# slipper interpolering pga synkroniserad data!
+# projicera vektor på bild!
 def transform_imu(imu_data): ...
 
 
-def transform_image(image_data): ...
+# behöver ändra storlek + normalisera!
+def transform_image(image_data):
+    print("\n***** Transforming image data...... ***** ")
+    print(f"Current Image: {image_data[0,0]}")
+    plt.imshow(image_data)
+    plt.show()
+    resized = cv2.resize(image_data, (224, 224))
+    print(f"Resized Image: {resized[0,0]}")
+    normalized = (resized / 255.0).astype(np.float32)
+    print(f"Normalized Image: {normalized[0,0]}")
+    plt.imshow(normalized)
+    plt.show()
 
 
+# behöver ta bort brus?
+# 3D till 2D projection!
 def transform_lidar(lidar_data): ...
-
-
-def format_conversion(): ...
